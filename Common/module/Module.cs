@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Vape_for_Windows.Common.module;
 
-namespace VapeForWindows.Common
+namespace Vape_for_Windows.Common
 {
     internal abstract class Module
     {
@@ -37,10 +37,10 @@ namespace VapeForWindows.Common
             this.key = key;
         }
 
-        public abstract void Draw();
-        public abstract void Render();
-        public abstract void Update();
-        public abstract void OnEnable();
-        public abstract void OnDisable();
+        public virtual void Draw() { }
+        public virtual void Render() { }
+        public virtual void Update() { }
+        public virtual void OnEnable() { }
+        public virtual void OnDisable() { }
     }
 }

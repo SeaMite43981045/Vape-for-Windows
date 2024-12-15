@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VapeForWindows.Common
+namespace Vape_for_Windows.Common.util
 {
     internal enum LogSource {
         [Description("Vape for Windows")]

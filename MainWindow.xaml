@@ -64,7 +64,7 @@
         </Button>
         <Image Width="168" Height="50" Source="/Assets/vape.jpg" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,100" Stretch="Fill"/>
 
-        <Button Name="InjectButton" Height="42" Width="112" Margin="0,150,0,0" Click="Inject" BorderBrush="#FFDDDDDD">
+        <Button Name="InjectButton" Height="42" Width="112" Margin="0,75,0,0" Click="Inject" BorderBrush="#FFDDDDDD">
             <Button.Style>
                 <Style TargetType="Button">
                     <Style.Triggers>

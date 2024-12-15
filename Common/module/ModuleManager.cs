@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Vape_for_Windows.Common.module;
-using VapeForWindows.Common;
+using Vape_for_Windows.Common.util;
 
-namespace VapeForWindows.Common
+namespace Vape_for_Windows.Common
 {
     internal class ModuleManager
     {
