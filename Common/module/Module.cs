@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vape_for_Windows.Common.module;
-
-namespace Vape_for_Windows.Common
+﻿namespace Vape_for_Windows.Common
 {
     internal abstract class Module
     {

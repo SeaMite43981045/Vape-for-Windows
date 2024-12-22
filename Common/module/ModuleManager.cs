@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vape_for_Windows.Common.module;
-using Vape_for_Windows.Common.util;
+﻿using Vape_for_Windows.Common.Utils;
 
 namespace Vape_for_Windows.Common
 {
