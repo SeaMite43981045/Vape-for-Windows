@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
-using Vape_for_Windows.Common;
+using Vape_for_Windows.Common.Module;
 
-namespace Vape_for_Windows.Modules.System
+namespace Vape_for_Windows.Modules.SYSTEM
 {
     class Shutdown : Module
     {

@@ -1,6 +1,6 @@
 ﻿using Vape_for_Windows.Common.Utils;
 
-namespace Vape_for_Windows.Common
+namespace Vape_for_Windows.Common.Module
 {
     internal class ModuleManager
     {

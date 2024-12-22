@@ -1,4 +1,4 @@
-﻿namespace Vape_for_Windows.Common
+﻿namespace Vape_for_Windows.Common.Module
 {
     enum Category
     {
