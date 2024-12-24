@@ -13,11 +13,14 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
 
+using Vape_for_Windows.ui;
+
 namespace Vape_for_Windows
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    /// </summary> 
+    
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -49,6 +52,12 @@ namespace Vape_for_Windows
             }
 
             this.Visibility = Visibility.Hidden;
+
+            MainGui mainGui = new MainGui();
+            mainGui.Show();
+
+            new NotificationWindow().send("Finish", "Inject successfully", 0);
+            Thread.Sleep(TimeSpan.FromMilliseconds(100));
         }
     }
 }
