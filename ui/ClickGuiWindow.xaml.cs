@@ -38,6 +38,11 @@ namespace Vape_for_Windows.ui
             this.ClickGuiMenuGrid.Children.Add(clickMenu);
         }
 
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
+
         // Window Load
         public void Window_Loaded(object sender, RoutedEventArgs e)
         {
