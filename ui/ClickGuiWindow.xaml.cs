@@ -1,23 +1,41 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using Vape_for_Windows.ui.ClickGui;
 
-namespace Vape_for_Windows
+namespace Vape_for_Windows.ui
 {
     /// <summary>
-    /// MainGui.xaml 的交互逻辑
+    /// MainGuiWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class MainGui : Window
+    public partial class ClickGuiWindow : Window
     {
-        public MainGui()
+        public ClickGuiWindow()
         {
             InitializeComponent();
+
+            ClickMenu clickMenu = new ClickMenu();
+
             this.Left = 0;
             this.Top = 0;
             this.Height = SystemParameters.PrimaryScreenHeight;
             this.Width = SystemParameters.PrimaryScreenWidth;
             this.Loaded += Window_Loaded;
             this.ShowInTaskbar = false;
+
+            this.ClickGuiMenuGrid.Children.Add(clickMenu);
         }
 
         // Window Load

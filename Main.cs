@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
-using Vape_for_Windows.ui.ClickGui;
 
 namespace Vape_for_Windows
 {
@@ -20,7 +13,7 @@ namespace Vape_for_Windows
             {
                 if (Keyboard.IsKeyDown(Key.RightCtrl) && Keyboard.IsKeyDown(Key.RightShift) && !_keydown)
                 {
-                    new ClickMenu().Show();
+                    new ui.ClickGuiWindow().Show();
                     _keydown = true;
                 }
             }));

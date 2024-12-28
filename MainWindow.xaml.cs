@@ -1,17 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Linq;
+﻿using System.Windows;
 
 using Vape_for_Windows.ui;
 using Vape_for_Windows.ui.ClickGui;
@@ -50,10 +37,10 @@ namespace Vape_for_Windows
             this.Visibility = Visibility.Hidden;
 
             MainGui mainGui = new MainGui();
-            ClickMenu clickMenu = new ClickMenu();
+            ClickGuiWindow clickGuiWindow = new ClickGuiWindow();
 
             mainGui.Show();
-            clickMenu.Show();
+            clickGuiWindow.Show();
 
             new NotificationWindow().send("Finish", "Inject successfully", 0, 5);
             Thread.Sleep(TimeSpan.FromMilliseconds(100));
