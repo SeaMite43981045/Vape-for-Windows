@@ -62,7 +62,7 @@
             </Button.Template>
             <iconPacks:PackIconEvaIcons Width="10" Kind="Minus" Foreground="#FF6F6F6F"/>
         </Button>
-        <Image Width="168" Height="50" Source="/Assets/vape.jpg" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,100" Stretch="Fill"/>
+        <Image Width="168" Height="50" Source="D:\Programs\C#\Vape for Windows\Vape-for-Windows\Assets\vape.png" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,100" Stretch="Fill"/>
 
         <Button Name="InjectButton" Height="42" Width="112" Margin="0,75,0,0" Click="Inject" BorderBrush="#FFDDDDDD">
             <Button.Style>
@@ -89,9 +89,6 @@
             </Button.Template>
             <TextBlock Name="Button_inject" Background="Transparent" Foreground="White"></TextBlock>
         </Button>
-
-        <ProgressBar Visibility="Hidden" Name="InjectProgress" local:ProgressController.SmoothValue="{Binding Progress}" Background="#FF4D4D4D" Foreground="#FF058569" VerticalAlignment="Center" Margin="0,150,0,0" Width="175" Height="4" BorderBrush="#FF4D4D4D"/>
-
     </Grid>
 
 </Window>

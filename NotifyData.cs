@@ -10,5 +10,6 @@ namespace Vape_for_Windows
     {
         public string Title { get; set; }
         public string Content { get; set; }
+        public int Time { get; set; }
     }
 }

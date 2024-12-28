@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Xml.Linq;
 
 using Vape_for_Windows.ui;
+using Vape_for_Windows.ui.ClickGui;
 
 namespace Vape_for_Windows
 {
@@ -23,6 +24,8 @@ namespace Vape_for_Windows
     
     public partial class MainWindow : Window
     {
+        private Main _main = new Main();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -44,20 +47,17 @@ namespace Vape_for_Windows
         private void Inject(object sender, RoutedEventArgs e) 
         {
             this.InjectButton.Visibility = Visibility.Hidden;
-            this.InjectProgress.Visibility = Visibility.Visible;
-
-            for (int i = 0; i < 173; i++)
-            {
-                this.InjectProgress.Value += 1;
-            }
-
             this.Visibility = Visibility.Hidden;
 
             MainGui mainGui = new MainGui();
-            mainGui.Show();
+            ClickMenu clickMenu = new ClickMenu();
 
-            new NotificationWindow().send("Finish", "Inject successfully", 0);
+            mainGui.Show();
+            clickMenu.Show();
+
+            new NotificationWindow().send("Finish", "Inject successfully", 0, 5);
             Thread.Sleep(TimeSpan.FromMilliseconds(100));
+            _main.main();
         }
     }
 }

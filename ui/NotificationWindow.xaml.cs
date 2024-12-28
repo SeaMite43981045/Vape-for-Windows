@@ -64,7 +64,7 @@ namespace Vape_for_Windows.ui
 
                 Task.Factory.StartNew(delegate
                 {
-                        Thread.Sleep(TimeSpan.FromSeconds(2));
+                    Thread.Sleep(TimeSpan.FromSeconds(data.Time));
 
                     this.Dispatcher.Invoke(delegate
                     {
@@ -83,11 +83,12 @@ namespace Vape_for_Windows.ui
             }
         }
 
-        public void send(string title, string content, int type)
+        public void send(string title, string content, int type, int time)
         {
             NotifyData data = new NotifyData();
             data.Title = title;
             data.Content = content;
+            data.Time = time;
 
             NotificationWindow dialog = new NotificationWindow();
             dialog.Closed += Dialog_Closed;

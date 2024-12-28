@@ -20,9 +20,9 @@ namespace Vape_for_Windows.ui.ClickGui
     /// <summary>
     /// Menu.xaml 的交互逻辑
     /// </summary>
-    public partial class Menu : Window
+    public partial class ClickMenu : Window
     {
-        public Menu()
+        public ClickMenu()
         {
             InitializeComponent();
 
