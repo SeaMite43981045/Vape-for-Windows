@@ -42,7 +42,7 @@
         </Border>
 
         <Grid Height="37" VerticalAlignment="Top">
-            <Image Height="14" Source="D:\Programs\C#\Vape for Windows\Vape-for-Windows\Assets\vape.png" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0"/>
+            <Image Height="14" Source="../../Assets/vape.png" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0"/>
             <iconPacks:PackIconMaterialDesign Kind="Settings" Foreground="#A1A1A1A1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,12,0" Height="14"/>
         </Grid>
 
