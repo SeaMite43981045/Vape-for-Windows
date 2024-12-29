@@ -11,12 +11,17 @@
 
   <ItemGroup>
     <None Remove="App.config" />
+    <None Remove="Assets\vape.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MahApps.Metro.IconPacks" Version="5.1.0" />
     <PackageReference Include="Notification.Wpf" Version="8.0.0" />
     <PackageReference Include="RRQMSkin" Version="2.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\vape.png" />
   </ItemGroup>
 
 </Project>

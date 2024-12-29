@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Vape_for_Windows.ui.ClickGui;
 
 namespace Vape_for_Windows.ui
@@ -22,6 +14,9 @@ namespace Vape_for_Windows.ui
     /// </summary>
     public partial class ClickGuiWindow : Window
     {
+        private static Boolean _SystemEnable = false;
+        SystemBackground _SystemBackground = new SystemBackground { SystemButtonBackground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF1A191A")), SystemControlForeground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFA2A2A2")) };
+
         public ClickGuiWindow()
         {
             InitializeComponent();
@@ -35,12 +30,63 @@ namespace Vape_for_Windows.ui
             this.Loaded += Window_Loaded;
             this.ShowInTaskbar = false;
 
-            this.ClickGuiMenuGrid.Children.Add(clickMenu);
+            //this.ClickGuiMenuGrid.Children.Add(clickMenu);
+            this.DataContext = _SystemBackground;
         }
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
+        }
+
+        private void SystemButton_Click(object sender, RoutedEventArgs e)
+        {
+            _SystemBackground.SystemButtonBackground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF1F1E1F"));
+            new NotificationWindow().send("Clicked", "Clicked", 0, 3);
+        }
+
+        public class SystemBackground : INotifyPropertyChanged
+        {
+            private SolidColorBrush systemButtonBackgroundValue;
+            private SolidColorBrush systemControlForegroundValue;
+
+            public event PropertyChangedEventHandler? PropertyChanged;
+
+            public SolidColorBrush SystemButtonBackground
+            {
+                get { return systemButtonBackgroundValue; }
+                set
+                {
+                    if (systemButtonBackgroundValue != value)
+                    {
+                        systemButtonBackgroundValue = value;
+                        OnPropertyChanged();
+                    }
+                }
+            }
+
+            public SolidColorBrush SystemControlForeground
+            {
+                get { return systemControlForegroundValue; }
+                set
+                {
+                    if (systemControlForegroundValue != value)
+                    {
+                        systemControlForegroundValue = value;
+                        OnPropertyChanged();
+                    }
+                }
+            }
+
+            protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Test button clicked");
         }
 
         // Window Load
