@@ -13,7 +13,7 @@ namespace Vape_for_Windows
             {
                 if (Keyboard.IsKeyDown(Key.RightCtrl) && Keyboard.IsKeyDown(Key.RightShift) && !_keydown)
                 {
-                    new ui.ClickGuiWindow().Show();
+                    new ui.Click().Show();
                     _keydown = true;
                 }
             }));

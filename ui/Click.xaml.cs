@@ -2,26 +2,35 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
-using Vape_for_Windows.ui.ClickGui;
 
 namespace Vape_for_Windows.ui
 {
     /// <summary>
-    /// MainGuiWindow.xaml 的交互逻辑
+    /// Click.xaml 的交互逻辑
     /// </summary>
-    public partial class ClickGuiWindow : Window
+    /// 
+    public partial class Click : Window
     {
         private static Boolean _SystemEnable = false;
         SystemBackground _SystemBackground = new SystemBackground { SystemButtonBackground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF1A191A")), SystemControlForeground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFA2A2A2")) };
 
-        public ClickGuiWindow()
+        private SolidColorBrush _enable = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF058569"));
+        private SolidColorBrush _disable = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#A1A1A1A1"));
+
+        private Boolean _systemFlag = false;
+        private Boolean _displayFlag = false;
+
+        bool _isMouseDown = false;
+        Point _mouseDownPosition;
+        Thickness _mouseDownMargin;
+
+        public Click()
         {
             InitializeComponent();
-
-            ClickMenu clickMenu = new ClickMenu();
 
             this.Left = 0;
             this.Top = 0;
@@ -34,15 +43,66 @@ namespace Vape_for_Windows.ui
             this.DataContext = _SystemBackground;
         }
 
-        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            DragMove();
-        }
-
         private void SystemButton_Click(object sender, RoutedEventArgs e)
         {
-            _SystemBackground.SystemButtonBackground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF1F1E1F"));
-            new NotificationWindow().send("Clicked", "Clicked", 0, 3);
+            if (_systemFlag)
+            {
+                SystemIcon.Foreground = _disable;
+                SystemText.Foreground = _disable;
+                this._systemFlag = !_systemFlag;
+            }
+            else
+            {
+                SystemIcon.Foreground = _enable;
+                SystemText.Foreground = _enable;
+                this._systemFlag = !_systemFlag;
+            }
+        }
+
+        private void DisplayButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_displayFlag)
+            {
+                DisplayIcon.Foreground = _disable;
+                DisplayText.Foreground = _disable;
+                this._displayFlag = !_displayFlag;
+            }
+            else
+            {
+                DisplayIcon.Foreground = _enable;
+                DisplayText.Foreground = _enable;
+                this._displayFlag = !_displayFlag;
+            }
+        }
+
+        private void GridDrag_Down(object sender, MouseButtonEventArgs e)
+        {
+            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            {
+                var c = sender as Control;
+                _isMouseDown = true;
+                _mouseDownPosition = e.GetPosition(this);
+                _mouseDownMargin = c.Margin;
+                c.CaptureMouse();
+            }
+        }
+
+        private void GridDrag_Move(object sender, MouseEventArgs e)
+        {
+            if (_isMouseDown)
+            {
+                var c = sender as Control;
+                var pos = e.GetPosition(this);
+                var dp = pos - _mouseDownPosition;
+                c.Margin = new Thickness(_mouseDownMargin.Left + dp.X, _mouseDownMargin.Top + dp.Y, _mouseDownMargin.Right - dp.X, _mouseDownMargin.Bottom - dp.Y);
+            }
+        }
+
+        private void GridDrag_Up(object sender, MouseButtonEventArgs e)
+        {
+            var c = sender as Control;
+            _isMouseDown = false;
+            c.ReleaseMouseCapture();
         }
 
         public class SystemBackground : INotifyPropertyChanged
@@ -82,11 +142,6 @@ namespace Vape_for_Windows.ui
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Test button clicked");
         }
 
         // Window Load
@@ -161,5 +216,10 @@ namespace Vape_for_Windows.ui
         [DllImport("kernel32.dll", EntryPoint = "SetLastError")]
         public static extern void SetLastError(int dwErrorCode);
         #endregion
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("114514");
+        }
     }
 }

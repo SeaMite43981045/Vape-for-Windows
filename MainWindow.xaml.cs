@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 
 using Vape_for_Windows.ui;
-using Vape_for_Windows.ui.ClickGui;
 
 namespace Vape_for_Windows
 {
@@ -25,7 +24,7 @@ namespace Vape_for_Windows
 
         private void WindowClose(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Environment.Exit(0);
         }
         private void WindowMin(Object sender, RoutedEventArgs e)
         {
@@ -37,10 +36,11 @@ namespace Vape_for_Windows
             this.Visibility = Visibility.Hidden;
 
             MainGui mainGui = new MainGui();
-            ClickGuiWindow clickGuiWindow = new ClickGuiWindow();
+            Click click = new Click();
 
             mainGui.Show();
-            clickGuiWindow.Show();
+            //clickGuiWindow.Show();
+            click.Show();
 
             new NotificationWindow().send("Finish", "Inject successfully", 0, 5);
             Thread.Sleep(TimeSpan.FromMilliseconds(100));

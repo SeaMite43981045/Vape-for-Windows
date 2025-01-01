@@ -24,4 +24,9 @@
     <Resource Include="Assets\vape.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Modules\DISPLAY\" />
+    <Folder Include="ui\ClickGui\" />
+  </ItemGroup>
+
 </Project>
