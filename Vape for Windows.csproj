@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <Folder Include="Modules\DISPLAY\" />
-    <Folder Include="ui\ClickGui\" />
   </ItemGroup>
 
 </Project>

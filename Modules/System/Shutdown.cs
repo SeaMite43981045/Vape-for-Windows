@@ -3,6 +3,12 @@ using Vape_for_Windows.Common.Module;
 
 namespace Vape_for_Windows.Modules.SYSTEM
 {
+    enum ShutdownType
+    {
+        POWEROFF,
+        REBOOT,
+        LOGOFF
+    }
     class Shutdown : Module
     {
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -58,10 +64,18 @@ namespace Vape_for_Windows.Modules.SYSTEM
         {
         }
 
-        public override void OnEnable()
+        public void run(ShutdownType type)
         {
             SetEnabled(!GetEnabled());
-            DoExitWin(EWX_FORCE | EWX_POWEROFF);
+            switch (type)
+            {
+                case ShutdownType.POWEROFF:
+                    DoExitWin(EWX_FORCE | EWX_POWEROFF);
+                case ShutdownType.REBOOT:
+                    DoExitWin(EWX_FORCE | EWX_REBOOT);
+                case ShutdownType.LOGOFF:
+                    DoExitWin(EWX_FORCE | EWX_LOGOFF);
+            }
         }
     }
 }

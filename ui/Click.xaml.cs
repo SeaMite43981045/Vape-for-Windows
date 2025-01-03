@@ -6,6 +6,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using Vape_for_Windows.Modules.SYSTEM;
+using Vape_for_Windows.ui.ClickGui;
 
 namespace Vape_for_Windows.ui
 {
@@ -23,6 +25,9 @@ namespace Vape_for_Windows.ui
 
         private Boolean _systemFlag = false;
         private Boolean _displayFlag = false;
+
+        private Boolean _module_ShutdownFlag = false;
+        private Boolean _module_RebootFlag = false;
 
         bool _isMouseDown = false;
         Point _mouseDownPosition;
@@ -49,12 +54,16 @@ namespace Vape_for_Windows.ui
             {
                 SystemIcon.Foreground = _disable;
                 SystemText.Foreground = _disable;
+
+                ClickGuiSystem.Visibility = Visibility.Hidden;
                 this._systemFlag = !_systemFlag;
             }
             else
             {
                 SystemIcon.Foreground = _enable;
                 SystemText.Foreground = _enable;
+
+                ClickGuiSystem.Visibility = Visibility.Visible;
                 this._systemFlag = !_systemFlag;
             }
         }
@@ -75,34 +84,36 @@ namespace Vape_for_Windows.ui
             }
         }
 
-        private void GridDrag_Down(object sender, MouseButtonEventArgs e)
+        private void Module_ShutdownButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            if (_module_ShutdownFlag)
             {
-                var c = sender as Control;
-                _isMouseDown = true;
-                _mouseDownPosition = e.GetPosition(this);
-                _mouseDownMargin = c.Margin;
-                c.CaptureMouse();
+                Module_ShutdownText.Foreground = _disable;
+                this._module_ShutdownFlag = !_module_ShutdownFlag;
+
+                new Shutdown().run(ShutdownType.POWEROFF);
+            }
+            else
+            {
+                Module_ShutdownText.Foreground = _enable;
+                this._module_ShutdownFlag = !_module_ShutdownFlag;
             }
         }
 
-        private void GridDrag_Move(object sender, MouseEventArgs e)
+        private void Module_RebootButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_isMouseDown)
+            if (_module_RebootFlag)
             {
-                var c = sender as Control;
-                var pos = e.GetPosition(this);
-                var dp = pos - _mouseDownPosition;
-                c.Margin = new Thickness(_mouseDownMargin.Left + dp.X, _mouseDownMargin.Top + dp.Y, _mouseDownMargin.Right - dp.X, _mouseDownMargin.Bottom - dp.Y);
-            }
-        }
+                Module_RebootText.Foreground = _disable;
+                this._module_RebootFlag = !_module_RebootFlag;
 
-        private void GridDrag_Up(object sender, MouseButtonEventArgs e)
-        {
-            var c = sender as Control;
-            _isMouseDown = false;
-            c.ReleaseMouseCapture();
+                new Shutdown().run(ShutdownType.REBOOT);
+            }
+            else
+            {
+                Module_RebootText.Foreground = _enable;
+                this._module_RebootFlag = !_module_RebootFlag;
+            }
         }
 
         public class SystemBackground : INotifyPropertyChanged

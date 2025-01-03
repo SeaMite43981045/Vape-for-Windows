@@ -36,24 +36,25 @@
             </Style>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
-        <Grid Name="ClickGuiMenu"
+    <Grid Background="Transparent">
+        <Grid Name="ClickGuiMenu_Grid"
+              Margin="100,100,0,0"
               Background="Transparent" 
               Height="505" Width="220"
-              HorizontalAlignment="Left" VerticalAlignment="Top"
-              Margin="100,100,0,0">
+              HorizontalAlignment="Left" VerticalAlignment="Top">
             <Border Name="ClickGuiMenuBorder"
                     Background="#FF141414" BorderBrush="Transparent"
-                    CornerRadius="7">
+                    CornerRadius="5">
                 <Border.Effect>
                     <DropShadowEffect ShadowDepth="0"/>
                 </Border.Effect>
             </Border>
 
             <Grid Name="ClickGuiMenuTitle"
-                  Height="37"
+                  Margin="0,3,0,0"
+                  Height="34"
                   Background="#FF141414"
-                  PreviewMouseDown="GridDrag_Down" PreviewMouseMove="GridDrag_Move" PreviewMouseUp="GridDrag_Up"
+                  AllowDrop="True"
                   VerticalAlignment="Top">
                 <Image Name="ClickGuiMenuTitle_Icon"                       
                        Source="..\Assets\vape.png" 
@@ -78,14 +79,14 @@
                                                        Height="13" Margin="12,0,0,0"
                                                        VerticalAlignment="Center"/>
                         <TextBlock Name="SystemText"
-                                       Text="System" FontSize="13"
-                                       Foreground="#FFA2A2A2"
-                                       HorizontalAlignment="Left" VerticalAlignment="Center"
-                                       Margin="5,0,0,0"/>
+                                   Text="System" FontSize="13"
+                                   Foreground="#FFA2A2A2"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                                   Margin="5,0,0,0"/>
                         <iconPacks:PackIconVaadinIcons Kind="AngleRight" Name="SystemArrow"
-                                                           Foreground="#A1A1A1A1"
-                                                           VerticalAlignment="Stretch"
-                                                           Height="8" Margin="115,0,0,0"/>
+                                                       Foreground="#A1A1A1A1"
+                                                       VerticalAlignment="Stretch"
+                                                       Height="8" Margin="115,0,0,0"/>
                     </WrapPanel>
                 </Button>
                 <Button Name="DisplayButton"
@@ -96,18 +97,18 @@
                                HorizontalAlignment="Left"
                                Width="220">
                         <iconPacks:PackIconBootstrapIcons Kind="Display" Name="DisplayIcon"
-                                                       Foreground="#FFA2A2A2"
-                                                       Height="13" Margin="12,0,0,0"
-                                                       VerticalAlignment="Center"/>
+                                                          Foreground="#FFA2A2A2"
+                                                          Height="13" Margin="12,0,0,0"
+                                                          VerticalAlignment="Center"/>
                         <TextBlock Name="DisplayText"
-                                       Text="Display" FontSize="13"
-                                       Foreground="#FFA2A2A2"
-                                       HorizontalAlignment="Left" VerticalAlignment="Center"
-                                       Margin="5,0,0,0"/>
+                                   Text="Display" FontSize="13"
+                                   Foreground="#FFA2A2A2"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                                   Margin="5,0,0,0"/>
                         <iconPacks:PackIconVaadinIcons Kind="AngleRight" Name="DisplayArrow"
-                                                           Foreground="#A1A1A1A1"
-                                                           VerticalAlignment="Stretch"
-                                                           Height="8" Margin="115,0,0,0"/>
+                                                       Foreground="#A1A1A1A1"
+                                                       VerticalAlignment="Stretch"
+                                                       Height="8" Margin="115,0,0,0"/>
                     </WrapPanel>
                 </Button>
             </StackPanel>
@@ -119,18 +120,43 @@
               Margin="400,100,0,0">
             <Border Name="ClickGuiSystemBorder"
                     Background="#FF141414" BorderBrush="Transparent"
-                    CornerRadius="7">
-                <Border.Effect>
-                    <BlurEffect/>
-                </Border.Effect>
+                    CornerRadius="5">
             </Border>
 
             <Grid Name="ClickGuiSystemTitle"
-                  Height="37"
+                  Height="34"
+                  Margin="0,3,0,0"
                   Background="#FF141414"
-                  PreviewMouseDown="GridDrag_Down" PreviewMouseMove="GridDrag_Move" PreviewMouseUp="GridDrag_Up"
                   VerticalAlignment="Top">
             </Grid>
+            <Button Name="Module_ShutdownButton"
+                        Style="{DynamicResource ButtonStyle}"
+                        PreviewMouseDown="Module_ShutdownButton_Click"
+                        Margin="0,37,0,0">
+                <WrapPanel Name="Module_ShutdownWrapPanel"
+                               HorizontalAlignment="Left"
+                               Width="220">
+                    <TextBlock Name="Module_ShutdownText"
+                               Text="Shutdown" FontSize="13"
+                               Foreground="#FFA2A2A2"
+                               HorizontalAlignment="Left" VerticalAlignment="Center"
+                               Margin="5,0,0,0"/>
+                </WrapPanel>
+            </Button>
+            <Button Name="Module_RebootButton"
+                        Style="{DynamicResource ButtonStyle}"
+                        PreviewMouseDown="Module_RebootButton_Click"
+                        Margin="0,37,0,0">
+                <WrapPanel Name="Module_RebootWrapPanel"
+                               HorizontalAlignment="Left"
+                               Width="220">
+                    <TextBlock Name="Module_RebootText"
+                               Text="Reboot" FontSize="13"
+                               Foreground="#FFA2A2A2"
+                               HorizontalAlignment="Left" VerticalAlignment="Center"
+                               Margin="5,0,0,0"/>
+                </WrapPanel>
+            </Button>
         </Grid>
     </Grid>
 </Window>
