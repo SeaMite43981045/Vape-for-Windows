@@ -8,8 +8,10 @@
         mc:Ignorable="d"
         Height="1440" Width="3440"
         ResizeMode="NoResize" Topmost="True" WindowStyle="None"
-        AllowsTransparency="True" Background="Transparent">
-
+        Background="Transparent">
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="-1"/>
+    </WindowChrome.WindowChrome>
     <Window.Resources>
         <ResourceDictionary>
             <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
@@ -36,127 +38,255 @@
             </Style>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid Background="Transparent">
+    <Grid>
+        <Border>
+            <Border.Opacity>0.5</Border.Opacity>
+            <Border.Background>Black</Border.Background>
+        </Border>
         <Grid Name="ClickGuiMenu_Grid"
-              Margin="100,100,0,0"
-              Background="Transparent" 
-              Height="505" Width="220"
-              HorizontalAlignment="Left" VerticalAlignment="Top">
+          Margin="100,100,0,0"
+          Background="Transparent" 
+          Height="505" Width="220"
+          HorizontalAlignment="Left" VerticalAlignment="Top">
             <Border Name="ClickGuiMenuBorder"
-                    Background="#FF141414" BorderBrush="Transparent"
-                    CornerRadius="5">
+                    PreviewMouseDown="Window_Close"
+                Background="#FF141414" BorderBrush="Transparent"
+                CornerRadius="5">
                 <Border.Effect>
                     <DropShadowEffect ShadowDepth="0"/>
                 </Border.Effect>
             </Border>
 
             <Grid Name="ClickGuiMenuTitle"
-                  Margin="0,3,0,0"
-                  Height="34"
-                  Background="#FF141414"
-                  AllowDrop="True"
-                  VerticalAlignment="Top">
+              Margin="0,3,0,0"
+              Height="34"
+              Background="#FF141414"
+              AllowDrop="True"
+              VerticalAlignment="Top">
                 <Image Name="ClickGuiMenuTitle_Icon"                       
-                       Source="..\Assets\vape.png" 
-                       Height="14" Margin="14,0,0,0"
-                       VerticalAlignment="Center" HorizontalAlignment="Left" />
-                <iconPacks:PackIconMaterialDesign Kind="Settings" Name="ClickGuiMenuTitle_Setting"
-                                                  Foreground="#A1A1A1A1"
-                                                  HorizontalAlignment="Right" VerticalAlignment="Center"
-                                                  Margin="0,0,12,0" Height="14"/>
+                   Source="..\Assets\vape.png" 
+                   Height="14" Margin="14,0,0,0"
+                   VerticalAlignment="Center" HorizontalAlignment="Left" />
+                <Button Style="{DynamicResource ButtonStyle}"
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                        Margin="0,0,12,0"
+                        Width="15" Height="15">
+                    <iconPacks:PackIconEvaIcons Kind="Close" Name="ClickGuiMenuTitle_Setting"
+                                                VerticalAlignment="Center" HorizontalAlignment="Center"
+                                              Foreground="#A1A1A1A1" Height="9"/>
+                </Button>
             </Grid>
 
             <StackPanel>
                 <Button Name="SystemButton"
-                        Style="{DynamicResource ButtonStyle}"
-                        PreviewMouseDown="SystemButton_Click"
-                        Margin="0,37,0,0">
+                    Style="{DynamicResource ButtonStyle}"
+                    PreviewMouseDown="SystemButton_Click"
+                    Margin="0,37,0,0">
                     <WrapPanel Name="SystemWrapPanel"
-                               HorizontalAlignment="Left"
-                               Width="220">
+                           HorizontalAlignment="Left"
+                           Width="220">
                         <iconPacks:PackIconFontAwesome Kind="WindowsBrands" Name="SystemIcon"
-                                                       Foreground="#FFA2A2A2"
-                                                       Height="13" Margin="12,0,0,0"
-                                                       VerticalAlignment="Center"/>
+                                                   Foreground="#FFA2A2A2"
+                                                   Height="13" Margin="12,0,0,0"
+                                                   VerticalAlignment="Center"/>
                         <TextBlock Name="SystemText"
-                                   Text="System" FontSize="13"
-                                   Foreground="#FFA2A2A2"
-                                   HorizontalAlignment="Left" VerticalAlignment="Center"
-                                   Margin="5,0,0,0"/>
+                               Text="System" FontSize="13"
+                               Foreground="#FFA2A2A2"
+                               HorizontalAlignment="Left" VerticalAlignment="Center"
+                               Margin="5,0,0,0"/>
                         <iconPacks:PackIconVaadinIcons Kind="AngleRight" Name="SystemArrow"
-                                                       Foreground="#A1A1A1A1"
-                                                       VerticalAlignment="Stretch"
-                                                       Height="8" Margin="115,0,0,0"/>
+                                                   Foreground="#A1A1A1A1"
+                                                   VerticalAlignment="Stretch"
+                                                   Height="8" Margin="115,0,0,0"/>
                     </WrapPanel>
                 </Button>
                 <Button Name="DisplayButton"
-                        Style="{DynamicResource ButtonStyle}"
-                        PreviewMouseDown="DisplayButton_Click"
-                        Margin="0,0,0,0">
+                    Style="{DynamicResource ButtonStyle}"
+                    PreviewMouseDown="DisplayButton_Click"
+                    Margin="0,0,0,0">
                     <WrapPanel Name="DisplayWrapPanel"
-                               HorizontalAlignment="Left"
-                               Width="220">
+                           HorizontalAlignment="Left"
+                           Width="220">
                         <iconPacks:PackIconBootstrapIcons Kind="Display" Name="DisplayIcon"
-                                                          Foreground="#FFA2A2A2"
-                                                          Height="13" Margin="12,0,0,0"
-                                                          VerticalAlignment="Center"/>
+                                                      Foreground="#FFA2A2A2"
+                                                      Height="13" Margin="12,0,0,0"
+                                                      VerticalAlignment="Center"/>
                         <TextBlock Name="DisplayText"
-                                   Text="Display" FontSize="13"
-                                   Foreground="#FFA2A2A2"
-                                   HorizontalAlignment="Left" VerticalAlignment="Center"
-                                   Margin="5,0,0,0"/>
+                               Text="Display" FontSize="13"
+                               Foreground="#FFA2A2A2"
+                               HorizontalAlignment="Left" VerticalAlignment="Center"
+                               Margin="5,0,0,0"/>
                         <iconPacks:PackIconVaadinIcons Kind="AngleRight" Name="DisplayArrow"
-                                                       Foreground="#A1A1A1A1"
-                                                       VerticalAlignment="Stretch"
-                                                       Height="8" Margin="115,0,0,0"/>
+                                                   Foreground="#A1A1A1A1"
+                                                   VerticalAlignment="Stretch"
+                                                   Height="8" Margin="115,0,0,0"/>
+                    </WrapPanel>
+                </Button>
+                <Button Name="MythwareButton"
+                    Style="{DynamicResource ButtonStyle}"
+                    PreviewMouseDown="MythwareButton_Click"
+                    Margin="0,0,0,0">
+                    <WrapPanel Name="MythwareWrapPanel"
+                           HorizontalAlignment="Left"
+                           Width="220">
+                        <iconPacks:PackIconBootstrapIcons Kind="Display" Name="MythwareIcon"
+                                                      Foreground="#FFA2A2A2"
+                                                      Height="13" Margin="12,0,0,0"
+                                                      VerticalAlignment="Center"/>
+                        <TextBlock Name="MythwareText"
+                               Text="Mythware" FontSize="14"
+                               Foreground="#FFA2A2A2"
+                               HorizontalAlignment="Left" VerticalAlignment="Center"
+                               Margin="5,0,0,0"/>
+                        <iconPacks:PackIconVaadinIcons Kind="AngleRight" Name="MythwareArrow"
+                                                   Foreground="#A1A1A1A1"
+                                                   VerticalAlignment="Stretch"
+                                                   Height="8" Margin="92,0,0,0"/>
                     </WrapPanel>
                 </Button>
             </StackPanel>
         </Grid>
         <Grid Name="ClickGuiSystem"
-              Background="Transparent" 
-              Height="505" Width="220"
-              HorizontalAlignment="Left" VerticalAlignment="Top"
-              Margin="400,100,0,0">
+          Background="Transparent" 
+          Height="505" Width="220"
+          HorizontalAlignment="Left" VerticalAlignment="Top"
+          Visibility="Hidden"
+          Margin="400,100,0,0">
             <Border Name="ClickGuiSystemBorder"
-                    Background="#FF141414" BorderBrush="Transparent"
-                    CornerRadius="5">
+                Background="#FF141414" BorderBrush="Transparent"
+                CornerRadius="5">
             </Border>
 
             <Grid Name="ClickGuiSystemTitle"
-                  Height="34"
-                  Margin="0,3,0,0"
-                  Background="#FF141414"
-                  VerticalAlignment="Top">
+              Height="34"
+              Margin="0,3,0,0"
+              Background="#FF141414"
+              VerticalAlignment="Top">
+                <TextBlock Text="System" Foreground="white" FontSize="17" Margin="15,0,0,0" VerticalAlignment="Center"/>
             </Grid>
-            <Button Name="Module_ShutdownButton"
-                        Style="{DynamicResource ButtonStyle}"
-                        PreviewMouseDown="Module_ShutdownButton_Click"
-                        Margin="0,37,0,0">
-                <WrapPanel Name="Module_ShutdownWrapPanel"
+            <StackPanel Margin="0,37,0,0">
+                <Button Name="Module_LogOffButton"
+                    Style="{DynamicResource ButtonStyle}"
+                    PreviewMouseDown="Module_LogOffButton_Click">
+                    <WrapPanel Name="Module_LogOffWrapPanel"
                                HorizontalAlignment="Left"
                                Width="220">
-                    <TextBlock Name="Module_ShutdownText"
+                        <TextBlock Name="Module_LogOffText"
+                               Text="LogOff" FontSize="13"
+                               Foreground="#FFA2A2A2"
+                               HorizontalAlignment="Left" VerticalAlignment="Center"
+                               Margin="20,0,0,0"/>
+                    </WrapPanel>
+                </Button>
+                <Button Name="Module_ShutdownButton"
+                    Style="{DynamicResource ButtonStyle}"
+                    PreviewMouseDown="Module_ShutdownButton_Click">
+                    <WrapPanel Name="Module_ShutdownWrapPanel"
+                               HorizontalAlignment="Left"
+                               Width="220">
+                        <TextBlock Name="Module_ShutdownText"
                                Text="Shutdown" FontSize="13"
                                Foreground="#FFA2A2A2"
                                HorizontalAlignment="Left" VerticalAlignment="Center"
-                               Margin="5,0,0,0"/>
-                </WrapPanel>
-            </Button>
-            <Button Name="Module_RebootButton"
+                               Margin="20,0,0,0"/>
+                    </WrapPanel>
+                </Button>
+                <Button Name="Module_RebootButton"
                         Style="{DynamicResource ButtonStyle}"
-                        PreviewMouseDown="Module_RebootButton_Click"
-                        Margin="0,37,0,0">
-                <WrapPanel Name="Module_RebootWrapPanel"
+                        PreviewMouseDown="Module_RebootButton_Click">
+                    <WrapPanel Name="Module_RebootWrapPanel"
                                HorizontalAlignment="Left"
                                Width="220">
-                    <TextBlock Name="Module_RebootText"
+                        <TextBlock Name="Module_RebootText"
                                Text="Reboot" FontSize="13"
                                Foreground="#FFA2A2A2"
                                HorizontalAlignment="Left" VerticalAlignment="Center"
-                               Margin="5,0,0,0"/>
-                </WrapPanel>
-            </Button>
+                               Margin="20,0,0,0"/>
+                    </WrapPanel>
+                </Button>
+
+                <Button Name="Module_NotificationButton"
+                        Style="{DynamicResource ButtonStyle}"
+                        PreviewMouseDown="Module_NotificationButton_Click">
+                    <WrapPanel Name="Module_NotificationWrapPanel"
+                               HorizontalAlignment="Left"
+                               Width="220">
+                        <TextBlock Name="Module_NotificationText"
+                               Text="Notification" FontSize="13"
+                               Foreground="#FFA2A2A2"
+                               HorizontalAlignment="Left" VerticalAlignment="Center"
+                               Margin="20,0,0,0"/>
+                    </WrapPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Grid Name="ClickGuiDisplay"
+          Background="Transparent" 
+          Height="505" Width="220"
+          HorizontalAlignment="Left" VerticalAlignment="Top"
+          Visibility="Hidden"
+          Margin="700,100,0,0">
+            <Border Name="ClickGuiDisplayBorder"
+        Background="#FF141414" BorderBrush="Transparent"
+        CornerRadius="5">
+            </Border>
+            <Grid Name="ClickGuiDisplayTitle"
+              Height="34"
+              Margin="0,3,0,0"
+              Background="#FF141414"
+              VerticalAlignment="Top">
+                <TextBlock Text="Display" Foreground="white" FontSize="17" Margin="15,0,0,0" VerticalAlignment="Center"/>
+            </Grid>
+
+            <StackPanel Margin="0,37,0,0">
+                <Button Name="Module_KeyboardDisplay"
+                    Style="{DynamicResource ButtonStyle}"
+                    PreviewMouseDown="Module_KeyboardDisplay_Click">
+                    <WrapPanel Name="Module_KeyboardDisplayWrapPanel"
+                               HorizontalAlignment="Left"
+                               Width="220">
+                        <TextBlock Name="Module_KeyboardDisplayText"
+                               Text="Notification" FontSize="13"
+                               Foreground="#FFA2A2A2"
+                               HorizontalAlignment="Left" VerticalAlignment="Center"
+                               Margin="20,0,0,0"/>
+                    </WrapPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Grid Name="ClickGuiMythware"
+  Background="Transparent" 
+  Height="505" Width="220"
+  HorizontalAlignment="Left" VerticalAlignment="Top"
+  Visibility="Hidden"
+  Margin="1000,100,0,0">
+            <Border Name="ClickGuiMythwareBorder"
+Background="#FF141414" BorderBrush="Transparent"
+CornerRadius="5">
+            </Border>
+            <Grid Name="ClickGuiMythwareTitle"
+      Height="34"
+      Margin="0,3,0,0"
+      Background="#FF141414"
+      VerticalAlignment="Top">
+                <TextBlock Text="Mythware" Foreground="white" FontSize="17" Margin="15,0,0,0" VerticalAlignment="Center"/>
+            </Grid>
+
+            <StackPanel Margin="0,37,0,0">
+                <Button Name="Module_KillMythware"
+            Style="{DynamicResource ButtonStyle}"
+            PreviewMouseDown="Module_KillMythware_Click">
+                    <WrapPanel Name="Module_KillMythwareWrapPanel"
+                       HorizontalAlignment="Left"
+                       Width="220">
+                        <TextBlock Name="Module_KillMythwareText"
+                       Text="KillMythware" FontSize="13"
+                       Foreground="#FFA2A2A2"
+                       HorizontalAlignment="Left" VerticalAlignment="Center"
+                       Margin="20,0,0,0"/>
+                    </WrapPanel>
+                </Button>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

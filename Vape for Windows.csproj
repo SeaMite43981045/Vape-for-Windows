@@ -24,8 +24,4 @@
     <Resource Include="Assets\vape.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Modules\DISPLAY\" />
-  </ItemGroup>
-
 </Project>

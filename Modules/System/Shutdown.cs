@@ -71,10 +71,13 @@ namespace Vape_for_Windows.Modules.SYSTEM
             {
                 case ShutdownType.POWEROFF:
                     DoExitWin(EWX_FORCE | EWX_POWEROFF);
+                    break;
                 case ShutdownType.REBOOT:
                     DoExitWin(EWX_FORCE | EWX_REBOOT);
+                    break;
                 case ShutdownType.LOGOFF:
                     DoExitWin(EWX_FORCE | EWX_LOGOFF);
+                    break;
             }
         }
     }

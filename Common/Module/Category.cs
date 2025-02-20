@@ -3,6 +3,7 @@
     enum Category
     {
         SYSTEM,
-        RENDER
+        RENDER,
+        MYTHWARE
     }
 }

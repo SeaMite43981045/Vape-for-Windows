@@ -2,12 +2,16 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using Vape_for_Windows.Modules.DISPLAY;
 using Vape_for_Windows.Modules.SYSTEM;
 using Vape_for_Windows.ui.ClickGui;
+using Vape_for_Windows.Modules.MYTHWARE;
+using System.Windows.Threading;
 
 namespace Vape_for_Windows.ui
 {
@@ -17,21 +21,31 @@ namespace Vape_for_Windows.ui
     /// 
     public partial class Click : Window
     {
-        private static Boolean _SystemEnable = false;
-        SystemBackground _SystemBackground = new SystemBackground { SystemButtonBackground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF1A191A")), SystemControlForeground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFA2A2A2")) };
+        private static Boolean shown = false;
 
         private SolidColorBrush _enable = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF058569"));
         private SolidColorBrush _disable = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#A1A1A1A1"));
 
         private Boolean _systemFlag = false;
         private Boolean _displayFlag = false;
+        private Boolean _mythwareFlag = false;
 
-        private Boolean _module_ShutdownFlag = false;
-        private Boolean _module_RebootFlag = false;
+        private Boolean _module_KeyboardDisplay = false;
 
-        bool _isMouseDown = false;
-        Point _mouseDownPosition;
-        Thickness _mouseDownMargin;
+        private KeyboardDisplay _keyboardDisplay = new KeyboardDisplay();
+        
+        private DispatcherTimer _timer;
+
+
+
+        private const int HWND_TOPMOST = -1;
+        private const int SWP_NOSIZE = 0x0001;
+        private const int SWP_NOMOVE = 0x0002;
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, uint uFlags);
+
 
         public Click()
         {
@@ -42,12 +56,38 @@ namespace Vape_for_Windows.ui
             this.Height = SystemParameters.PrimaryScreenHeight;
             this.Width = SystemParameters.PrimaryScreenWidth;
             this.Loaded += Window_Loaded;
+            this.Loaded += Window_Loaded_topmost;
+            this.Loaded += Window_Loaded_topmost_win32;
             this.ShowInTaskbar = false;
+            this.Closing += OnClosed;
 
             //this.ClickGuiMenuGrid.Children.Add(clickMenu);
-            this.DataContext = _SystemBackground;
         }
 
+        public static void showWindow()
+        {
+            if (!shown)
+            {
+                shown = true;
+                new Click().Topmost = true;
+                new Click().Show();
+            }
+        }
+        public void closeWindow()
+        {
+            if (shown)
+            {
+                this.Visibility = Visibility.Hidden;
+                Application.Current.Shutdown();
+            }
+        }
+
+        protected void OnClosed(object sender, CancelEventArgs e)
+        {
+            shown = false;
+        }
+
+        // Main menu button click event
         private void SystemButton_Click(object sender, RoutedEventArgs e)
         {
             if (_systemFlag)
@@ -74,84 +114,99 @@ namespace Vape_for_Windows.ui
             {
                 DisplayIcon.Foreground = _disable;
                 DisplayText.Foreground = _disable;
+
+                ClickGuiDisplay.Visibility = Visibility.Hidden;
                 this._displayFlag = !_displayFlag;
+
             }
             else
             {
                 DisplayIcon.Foreground = _enable;
                 DisplayText.Foreground = _enable;
+
+                ClickGuiDisplay.Visibility = Visibility.Visible;
                 this._displayFlag = !_displayFlag;
+
             }
         }
-
-        private void Module_ShutdownButton_Click(object sender, RoutedEventArgs e)
+        private void MythwareButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_module_ShutdownFlag)
+            if (_mythwareFlag)
             {
-                Module_ShutdownText.Foreground = _disable;
-                this._module_ShutdownFlag = !_module_ShutdownFlag;
+                MythwareIcon.Foreground = _disable;
+                MythwareText.Foreground = _disable;
 
-                new Shutdown().run(ShutdownType.POWEROFF);
+                ClickGuiMythware.Visibility = Visibility.Hidden;
+                this._mythwareFlag = !_mythwareFlag;
+
             }
             else
             {
-                Module_ShutdownText.Foreground = _enable;
-                this._module_ShutdownFlag = !_module_ShutdownFlag;
+                MythwareIcon.Foreground = _enable;
+                MythwareText.Foreground = _enable;
+
+                ClickGuiMythware.Visibility = Visibility.Visible;
+                this._mythwareFlag = !_mythwareFlag;
+
             }
+        }
+
+        private void Window_Close(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        // Button Click Event
+        private void Module_LogOffButton_Click(object sender, RoutedEventArgs e)
+        {
+            new Shutdown().run(ShutdownType.LOGOFF);
+        }
+        private void Module_ShutdownButton_Click(object sender, RoutedEventArgs e)
+        {
+            new Shutdown().run(ShutdownType.POWEROFF);
         }
 
         private void Module_RebootButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_module_RebootFlag)
-            {
-                Module_RebootText.Foreground = _disable;
-                this._module_RebootFlag = !_module_RebootFlag;
+            new Shutdown().run(ShutdownType.REBOOT);
+        }
 
-                new Shutdown().run(ShutdownType.REBOOT);
-            }
-            else
+        private void Module_NotificationButton_Click(object sender, RoutedEventArgs e)
+        {
+            new NotificationWindow().send("test", "test", 0, 3);
+        }
+
+        private void Module_KillMythware_Click(object sender, RoutedEventArgs e)
+        {
+            try
             {
-                Module_RebootText.Foreground = _enable;
-                this._module_RebootFlag = !_module_RebootFlag;
+                new KillMythware().OnEnable();
+                new NotificationWindow().send("Success", "Module KillMythware run successfully", 0, 5);
+            }
+            catch (Exception ex)
+            {
+                new NotificationWindow().send("Fail", ex.ToString(), 0, 5);
             }
         }
 
-        public class SystemBackground : INotifyPropertyChanged
+        private void Module_KeyboardDisplay_Click(object sender, RoutedEventArgs e)
         {
-            private SolidColorBrush systemButtonBackgroundValue;
-            private SolidColorBrush systemControlForegroundValue;
-
-            public event PropertyChangedEventHandler? PropertyChanged;
-
-            public SolidColorBrush SystemButtonBackground
+            if (_module_KeyboardDisplay)
             {
-                get { return systemButtonBackgroundValue; }
-                set
-                {
-                    if (systemButtonBackgroundValue != value)
-                    {
-                        systemButtonBackgroundValue = value;
-                        OnPropertyChanged();
-                    }
-                }
+                this.Module_KeyboardDisplayText.Foreground = _disable;
+
+                _keyboardDisplay.window_close();
+
+                this._module_KeyboardDisplay = !this._module_KeyboardDisplay;
             }
-
-            public SolidColorBrush SystemControlForeground
+            else
             {
-                get { return systemControlForegroundValue; }
-                set
-                {
-                    if (systemControlForegroundValue != value)
-                    {
-                        systemControlForegroundValue = value;
-                        OnPropertyChanged();
-                    }
-                }
-            }
+                this.Module_KeyboardDisplayText.Foreground = _enable;
 
-            protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                _keyboardDisplay.Show();
+                _keyboardDisplay.window_show();
+
+                this._module_KeyboardDisplay = !this._module_KeyboardDisplay;
             }
         }
 
@@ -228,9 +283,26 @@ namespace Vape_for_Windows.ui
         public static extern void SetLastError(int dwErrorCode);
         #endregion
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded_topmost(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("114514");
+            _timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
+            _timer.Tick += OnTimerTick;
+            _timer.Start();
+        }
+
+        private void OnTimerTick(object sender, EventArgs e)
+        {
+            this.Topmost = false; // Reset Topmost
+            IntPtr hWnd = new WindowInteropHelper(this).Handle;
+            SetWindowPos(hWnd, new IntPtr(HWND_TOPMOST), 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
+        }
+        private void Window_Loaded_topmost_win32(object sender, RoutedEventArgs e)
+        {
+            IntPtr hWnd = new WindowInteropHelper(this).Handle;
+            SetWindowPos(hWnd, new IntPtr(HWND_TOPMOST), 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
         }
     }
 }
