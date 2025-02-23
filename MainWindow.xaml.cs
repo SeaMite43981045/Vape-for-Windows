@@ -57,7 +57,7 @@ namespace Vape_for_Windows
             _keyboardHook.SetOnKeyUpEvent(Win32_KeyUp);
 
 
-            new NotificationWindow().send("Finish", "Inject successfully", 0, 5);
+            new NotificationWindow().send("Finish", "Press RShift + RAlt + RCtrl to open the ClickGui", 0, 5);
 
             Thread.Sleep(TimeSpan.FromMilliseconds(100));
             _main.main();

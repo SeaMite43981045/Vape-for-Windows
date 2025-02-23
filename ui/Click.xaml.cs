@@ -23,13 +23,20 @@ namespace Vape_for_Windows.ui
     {
         private static Boolean shown = false;
 
-        private SolidColorBrush _enable = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF058569"));
-        private SolidColorBrush _disable = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#A1A1A1A1"));
+        private nint _handle;
 
+        public SolidColorBrush _enable = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF058569"));
+        public SolidColorBrush _disable = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#A1A1A1A1"));
+
+        // ----- Flags ----- //
+
+        // module menu
         private Boolean _systemFlag = false;
         private Boolean _displayFlag = false;
         private Boolean _mythwareFlag = false;
 
+        //module button
+        public Boolean _module_SuspendMythwareFlag = false;
         private Boolean _module_KeyboardDisplay = false;
 
         private KeyboardDisplay _keyboardDisplay = new KeyboardDisplay();
@@ -178,14 +185,27 @@ namespace Vape_for_Windows.ui
 
         private void Module_KillMythware_Click(object sender, RoutedEventArgs e)
         {
-            try
+            new KillMythware().OnEnable();
+        }
+
+        private void Module_SuspendMythware_Click(object sender, RoutedEventArgs e)
+        {
+            if (_module_SuspendMythwareFlag)
             {
-                new KillMythware().OnEnable();
-                new NotificationWindow().send("Success", "Module KillMythware run successfully", 0, 5);
+                Module_SuspendMythwareText.Foreground = _disable;
+
+                new SuspendMythware().OnDisable();
+
+                this._module_SuspendMythwareFlag = !_module_SuspendMythwareFlag;
+
             }
-            catch (Exception ex)
+            else
             {
-                new NotificationWindow().send("Fail", ex.ToString(), 0, 5);
+                Module_SuspendMythwareText.Foreground = _enable;
+                this._module_SuspendMythwareFlag = !_module_SuspendMythwareFlag;
+
+                new SuspendMythware().OnEnable();
+
             }
         }
 
@@ -295,7 +315,6 @@ namespace Vape_for_Windows.ui
 
         private void OnTimerTick(object sender, EventArgs e)
         {
-            this.Topmost = false; // Reset Topmost
             IntPtr hWnd = new WindowInteropHelper(this).Handle;
             SetWindowPos(hWnd, new IntPtr(HWND_TOPMOST), 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
         }
